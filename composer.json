@@ -16,7 +16,7 @@
         "silverstripe/framework": "^4 || ^5"
     },
     "suggest": {
-        "gorricoe/link-field": "Adds a link field to the CMS, which this module extends"
+        "gorriecoe/silverstripe-linkfield": "Adds a link field to the CMS, which this module extends"
     },
     "autoload": {
         "psr-4": {

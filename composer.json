@@ -1,0 +1,27 @@
+{
+    "name": "iliain/silverstripe-accessible",
+    "type": "silverstripe-vendormodule",
+    "description": "Provides accessible features for Silverstripe",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "silverstripe",
+        "modular",
+        "cms",
+        "accessibility",
+        "wcag"
+    ],
+    "homepage": "http://github.com/Iliain/silverstripe-accessible",
+    "require": {
+        "php": "^7 || ^8",
+        "silverstripe/framework": "^4 || ^5"
+    },
+    "suggest": {
+        "gorricoe/link-field": "Adds a link field to the CMS, which this module extends"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iliain\\Accessible\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

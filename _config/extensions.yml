@@ -1,0 +1,15 @@
+---
+Name: accessibility-extensions
+---
+gorriecoe\Link\Models\Link:
+  extensions:
+    - Iliain\Accessible\Extensions\AccLinkExtension
+Sheadawson\Linkable\Models\Link:
+  extensions:
+    - Iliain\Accessible\Extensions\AccLinkExtension
+SilverStripe\Assets\Image:
+  extensions:
+    - Iliain\Accessible\Extensions\AccImageExtension
+SilverStripe\AssetAdmin\Forms\ImageFormFactory:
+  extensions:
+    - Iliain\Accessible\Extensions\AccImageFormFactoryExtension

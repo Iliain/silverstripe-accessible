@@ -25,7 +25,7 @@ Adds a pair of new fields to Images that can be edited in the CMS, Caption and A
 {$Image.Accessible}
 
 <% with $Image %>
-    <img src="/images/image001.png" alt="{$AltText}">
+    <img src="{$LinkURL}" alt="{$AltText}">
     <p>{$Caption}</p>
 <% end_with>
 ```

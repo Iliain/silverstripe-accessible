@@ -9,7 +9,7 @@
 
 Provides a number of additions to Silverstripe to make it more accessible.
 
-* Adds Caption and AltText fields to Images
+* Adds Caption and AltText fields to Images (both in templates and in WYSIWYGs)
 * Adds accessibility features to the Links provided by [sheadawson/silverstripe-linkable](https://github.com/sheadawson/silverstripe-linkable) and [gorricoe/silverstripe-link](https://github.com/gorriecoe/silverstripe-link)
 
 ## Installation (with composer)
@@ -28,6 +28,6 @@ Provides a number of additions to Silverstripe to make it more accessible.
 
 ## To Do
 
-* Include features to apply in WYSIWYGs
+* Include link features in WYSIWYGs
 * Add options to display File sizes in both templates and WYSIWYGs
 

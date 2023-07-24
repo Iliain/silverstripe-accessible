@@ -7,8 +7,11 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 
 /**
- * Class AccImageFormFactoryExtension
- * @package Iliain\Accessible\Extensions
+ * Extends ImageFormFactory to add the fields necessary to edit AltText
+ * and Caption
+ *
+ * @package silverstripe
+ * @subpackage silverstripe-accessible
  */
 class AccImageFormFactoryExtension extends Extension
 {

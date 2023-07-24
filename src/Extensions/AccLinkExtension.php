@@ -7,10 +7,17 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\Control\Director;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBField;
+use gorriecoe\Link\Models\Link as GorrieCoeLink;
+use Sheadawson\Linkable\Models\Link as SheadawsonLink;
 
 /**
- * Class AccLinkExtension
- * @package Iliain\Accessible\Extensions
+ * Extends Links to provide accessible information to the user
+ *
+ * @package silverstripe
+ * @subpackage silverstripe-accessible
+ * 
+ * @property string AccessibleText
+ * @property string AccessibleType
  */
 class AccLinkExtension extends DataExtension
 {
@@ -23,7 +30,7 @@ class AccLinkExtension extends DataExtension
     {
         parent::onBeforeWrite();
 
-        $this->owner->AccessibleType = $this->owner->getAccessibleTypeVal();
+        $this->owner->AccessibleType = $this->owner->getBaseAccessibleType();
     }
 
     public function updateCMSFields(FieldList $fields)
@@ -32,70 +39,105 @@ class AccLinkExtension extends DataExtension
     }
 
     /**
-     * Determine the type of link
+     * Determine the type of link. Options are:
+     * - Internal
+     * - External
+     * - Download
+     * - Email
+     * - Phone
+     * 
      * @return string
      */
-    public function getAccessibleTypeVal()
+    public function getBaseAccessibleType()
     {
         $url = $this->owner->getLinkURL();
-
-        if ((class_exists("gorriecoe\\Link\\Models\\Link") && $this->owner->ClassName == \gorriecoe\Link\Models\Link::class) || 
-            (class_exists("Sheadawson\\Linkable\\Models\\Link") && $this->owner->ClassName == \Sheadawson\Linkable\Models\Link::class)) {
+        
+        // @todo implement additional checks for differences between the two modules if necessary
+        if ((class_exists("gorriecoe\\Link\\Models\\Link") && $this->owner->ClassName == GorrieCoeLink::class) || 
+            (class_exists("Sheadawson\\Linkable\\Models\\Link") && $this->owner->ClassName == SheadawsonLink::class)) {
             $type = $this->owner->Type;
         } else {
-            return 'Internal';
+            $type = null;
         }
 
-        $accType = null;
         switch ($type) {
             case 'URL':
                 if (strpos($url, Director::absoluteBaseURL()) === false) {
-                    $accType = 'External';
+                    return 'External';
                 } else {
                     return 'Internal';
-    
-                    if (strpos($url, '#') !== false) {
-                        $accType = 'Anchor';
-                    }
                 }
                 break;
             case 'SiteTree':
-                $accType = 'Internal';
-
-                if ($this->owner->Anchor) {
-                    $cleanURL = str_replace($this->owner->Anchor, '', $url);
-                    $currentURL = Director::get_current_page()->Link();
-
-                    if ($currentURL == $cleanURL) {
-                        $accType = 'Anchor';
-                    }
-                }
+                return 'Internal';
                 break;
             case 'Email':
-                $accType = 'Email';
+                return 'Email';
                 break;
             case 'Phone':
-                $accType = 'Phone';
+                return 'Phone';
                 break;
             case 'File':
-                $accType = 'Download';
+                return 'Download';
                 break;
             default:
-                $accType = 'Internal';
+                return 'Internal';
                 break;
         }
+    }
 
-        return $accType;
+    /**
+     * Dynamically determine if the link is an Anchor on the current page
+     *
+     * @return string
+     */
+    public function getDynamicAccessibleType()
+    {
+        $type = $this->owner->AccessibleType;
+
+        if ($type == 'Internal' || $type == 'External') {
+            $isCurrentAnchor = $this->checkIfCurrentPageAnchor();
+            $type = $isCurrentAnchor ? $isCurrentAnchor : $type;
+        }
+
+        return $type;
+    }
+
+    /**
+     * Checks if the Link is the same as the current page and has an Anchor
+     *
+     * @return string|void
+     */
+    public function checkIfCurrentPageAnchor()
+    {
+        $anchor = $this->owner->Anchor;
+        $url = $this->owner->getLinkURL();
+        $currentURL = Director::get_current_page()->AbsoluteLink();
+
+        if ($this->owner->Type == 'SiteTree' && $anchor) {
+            $cleanURL = str_replace($anchor, '', $url);
+            if ($currentURL == $cleanURL) {
+                return 'Anchor';
+            }
+        } else {
+            if (strpos($url, '#') !== false) {
+                $splitURL = explode('#', $url);
+                if ($currentURL == $splitURL[0]) {
+                    return 'Anchor';
+                }
+            }
+        }
     }
 
     /**
      * Attempts to return a string in the following format: 
      * "Internal Link: Read more about our article on lorem ipsum here (opens in a new window)"
+     * 
      * @return string
      */
     public function getAccessibleDescription()
     {
-        $text = $this->owner->AccessibleType . ' Link';
+        $text = $this->owner->getDynamicAccessibleType() . ' Link';
 
         if ($this->owner->AccessibleText) {
             $text .= ': ' . $this->owner->AccessibleText;
@@ -112,6 +154,7 @@ class AccLinkExtension extends DataExtension
 
     /**
      * Provide a way to render an accessible template rather than the default
+     * 
      * @return string
      */
     public function getAccessible()

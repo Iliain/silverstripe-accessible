@@ -14,6 +14,12 @@ Provides a number of additions to Silverstripe to make it more accessible.
 * PHP 7.4+ or 8.0+
 * Silverstripe 4+ or 5+
 
+## Docs
+
+* [Images](docs/en/Images.md)
+* [Links](docs/en/Links.md)
+
+
 ## Usage
 
 ### Images
@@ -24,6 +30,7 @@ Adds a pair of new fields to Images that can be edited in the CMS, Caption and A
 <!-- The getAccessible function will render the accessible template for you -->
 {$Image.Accessible}
 
+<!-- Or you can render it yourself -->
 <% with $Image %>
     <img src="{$LinkURL}" alt="{$AltText}">
     <p>{$Caption}</p>
@@ -39,6 +46,7 @@ This extension adds an additional template to render in an accessible format, wh
 <!-- The getAccessible function will render the accessible template for you -->
 {$ButtonLink.Accessible}
 
+<!-- Or you can render it yourself -->
 <% with $ButtonLink %>
     <a href="{$LinkURL}" title="{$AccessibleDescription}">{$Title}</a>
 <% end_with %>

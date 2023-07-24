@@ -13,3 +13,6 @@ SilverStripe\Assets\Image:
 SilverStripe\AssetAdmin\Forms\ImageFormFactory:
   extensions:
     - Iliain\Accessible\Extensions\AccImageFormFactoryExtension
+SilverStripe\View\Parsers\ShortcodeParser:
+  extensions:
+    - Iliain\Accessible\Extensions\AccShortcodeExtension

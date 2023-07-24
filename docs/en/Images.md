@@ -1,6 +1,8 @@
 # Images
 
-An image can be rendered by default with `$Image.Accessible`, or you can render your own template and make use of the listed functions
+Adds a pair of new fields to Images that can be edited in the CMS, Caption and AltText. These fields can either be rendered manually, or with the provided template.
+
+## Usage
 
 ```HTML
 <!-- The getAccessible function will render the accessible template for you -->

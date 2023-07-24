@@ -1,5 +1,9 @@
 # Silverstripe Accessible
 
+[![Latest Stable Version](https://poser.pugx.org/iliain/silverstripe-accessible/v/stable)](https://packagist.org/packages/iliain/silverstripe-accessible)
+[![Latest Unstable Version](https://poser.pugx.org/iliain/silverstripe-accessible/v/unstable)](https://packagist.org/packages/iliain/silverstripe-accessible)
+[![License](https://poser.pugx.org/iliain/silverstripe-accessible/license)](https://packagist.org/packages/iliain/silverstripe-accessible)
+
 Provides a number of additions to Silverstripe to make it more accessible.
 
 * Adds Caption and AltText fields to Images
@@ -14,51 +18,13 @@ Provides a number of additions to Silverstripe to make it more accessible.
 * PHP 7.4+ or 8.0+
 * Silverstripe 4+ or 5+
 
-## Docs
+## Documentation
 
 * [Images](docs/en/Images.md)
 * [Links](docs/en/Links.md)
 
+## To Do
 
-## Usage
+* Include features to apply in WYSIWYGs
+* Add options to display File sizes in both templates and WYSIWYGs
 
-### Images
-
-Adds a pair of new fields to Images that can be edited in the CMS, Caption and AltText. These fields can either be rendered manually, or with the provided template.
-
-```HTML
-<!-- The getAccessible function will render the accessible template for you -->
-{$Image.Accessible}
-
-<!-- Or you can render it yourself -->
-<% with $Image %>
-    <img src="{$LinkURL}" alt="{$AltText}">
-    <p>{$Caption}</p>
-<% end_with>
-```
-
-You can overwrite the template in `templates/Iliain/Accessibility/Includes/AccessibleImage.ss`
-
-### Links
-This extension adds an additional template to render in an accessible format, which can be overwritten in your own theme.
-
-```HTML
-<!-- The getAccessible function will render the accessible template for you -->
-{$ButtonLink.Accessible}
-
-<!-- Or you can render it yourself -->
-<% with $ButtonLink %>
-    <a href="{$LinkURL}" title="{$AccessibleDescription}">{$Title}</a>
-<% end_with %>
-```
-
-The current implementation uses FontAwesome to render icons, but you can change this by overwriting the template in `templates/Iliain/Accessibility/Includes/AccessibleLink.ss`
-
-An example of a Link's output:
-
-```HTML
-<a href="/about-us" title="Internal Link: I am a link to the About Us page (opens in a new window)" target="_blank" rel="noopener">
-    About Us
-    <i class="fa-solid fa-up-right-from-square"></i>
-</a>
-```

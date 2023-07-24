@@ -1,6 +1,8 @@
 # Links
 
-A link can be rendered by default with `$ButtonLink.Accessible`, or you can render your own template and make use of the listed functions
+This extension adds an additional template to render in an accessible format, which can be overwritten in your own theme. A link can be rendered by default with `$ButtonLink.Accessible`, or you can render your own template and make use of the listed functions
+
+## Usage
 
 ```HTML
 <!-- The getAccessible function will render the accessible template for you -->
@@ -10,6 +12,17 @@ A link can be rendered by default with `$ButtonLink.Accessible`, or you can rend
 <% with $ButtonLink %>
     <a href="{$LinkURL}" title="{$AccessibleDescription}">{$Title}</a>
 <% end_with %>
+```
+
+The current implementation uses FontAwesome to render icons, but you can change this by overwriting the template in `templates/Iliain/Accessibility/Includes/AccessibleLink.ss`
+
+An example of a Link's output:
+
+```HTML
+<a href="/about-us" title="Internal Link: I am a link to the About Us page (opens in a new window)" target="_blank" rel="noopener">
+    About Us
+    <i class="fa-solid fa-up-right-from-square"></i>
+</a>
 ```
 
 ## Template Functions

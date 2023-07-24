@@ -24,4 +24,3 @@ Returns the AltText field of the image
 ### $Caption 
 
 Returns the Caption field of the image
-```

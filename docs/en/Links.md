@@ -57,4 +57,3 @@ Internal Link: I am a link to the About Us page (opens in a new window)
 ### updateAccessibleDescription
 
 An extension hook to allow you to change the text/format of the `$AccessibleDescription`
-

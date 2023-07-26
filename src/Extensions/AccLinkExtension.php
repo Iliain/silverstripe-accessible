@@ -48,9 +48,9 @@ class AccLinkExtension extends DataExtension
      * 
      * @return string
      */
-    public function getBaseAccessibleType()
+    public function getBaseAccessibleType($url = null)
     {
-        $url = $this->owner->getLinkURL();
+        if (!$url) $url = $this->owner->getLinkURL();
         
         // @todo implement additional checks for differences between the two modules if necessary
         if ((class_exists("gorriecoe\\Link\\Models\\Link") && $this->owner->ClassName == GorrieCoeLink::class) || 

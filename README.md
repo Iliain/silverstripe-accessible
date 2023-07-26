@@ -34,8 +34,10 @@ Below is the default config, you can overwrite any of these settings in your own
 Iliain\Accessible\Config:
     settings:
       enable_image_shortcode: true # (Boolean) Enable the image shortcode feature
+      enable_link_shortcode: true # (Boolean) Enable the link shortcode feature
     customise:
       image_shortcode_template: 'Iliain\Accessible\Includes\AccessibleShortcodeImage' # (String) Template to use for the image shortcode
+      link_shortcode_template: 'Iliain\Accessible\Includes\AccessibleShortcodeLink' # (String) Template to use for the link shortcode
 ```
 
 ## To Do

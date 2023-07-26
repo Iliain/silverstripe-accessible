@@ -26,6 +26,18 @@ Provides a number of additions to Silverstripe to make it more accessible.
 * [Images](docs/en/Images.md)
 * [Links](docs/en/Links.md)
 
+## Example Config
+
+Below is the default config, you can overwrite any of these settings in your own config.yml
+
+```YAML
+Iliain\Accessible\Config:
+    settings:
+      enable_image_shortcode: true # (Boolean) Enable the image shortcode feature
+    customise:
+      image_shortcode_template: 'Iliain\Accessible\Includes\AccessibleShortcodeImage' # (String) Template to use for the image shortcode
+```
+
 ## To Do
 
 * Include link features in WYSIWYGs

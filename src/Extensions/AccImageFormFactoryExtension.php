@@ -5,6 +5,8 @@ namespace Iliain\Accessible\Extensions;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
+use SilverStripe\AssetAdmin\Forms\FileFormFactory;
+use SilverStripe\Forms\LiteralField;
 
 /**
  * Extends ImageFormFactory to add the fields necessary to edit AltText
@@ -28,20 +30,38 @@ class AccImageFormFactoryExtension extends Extension
         $altField = TextareaField::create('AltText', 'Alt Text');
         $captionField = TextareaField::create('Caption', 'Caption');
 
-        $titleField = $fields->fieldByName('Editor.Details.Title');
-        if ($titleField) {
-            if ($titleField->isReadonly()) $altField = $altField->performReadonlyTransformation();
-            if ($titleField->isReadonly()) $captionField = $captionField->performReadonlyTransformation();
-
-            $fields->insertAfter(
-                'LastEdited',
-                $altField
+        if ($this->getFormType($context) === FileFormFactory::TYPE_INSERT_MEDIA) {
+            $fields->insertBefore(
+                'PreviewImage',
+                LiteralField::create('AccInstruct', '<p>Click on the \'Details\' button above to edit Alt Text and Captions</p>')
             );
-
-            $fields->insertAfter(
-                'AltText',
-                $captionField
-            );
+        } else {
+            $titleField = $fields->fieldByName('Editor.Details.Title');
+            if ($titleField) {
+                if ($titleField->isReadonly()) $altField = $altField->performReadonlyTransformation();
+                if ($titleField->isReadonly()) $captionField = $captionField->performReadonlyTransformation();
+    
+                $fields->insertAfter(
+                    'LastEdited',
+                    $altField
+                );
+    
+                $fields->insertAfter(
+                    'AltText',
+                    $captionField
+                );
+            }
         }
+    }
+
+    /**
+     * Get form type from 'type' context
+     *
+     * @param array $context
+     * @return string
+     */
+    protected function getFormType($context)
+    {
+        return empty($context['Type']) ? FileFormFactory::TYPE_ADMIN : $context['Type'];
     }
 }

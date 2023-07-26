@@ -1,0 +1,8 @@
+---
+Name: accessibility-config
+---
+Iliain\Accessible\Config:
+    settings:
+      enable_image_shortcode: true # (Boolean) Enable the image shortcode feature
+    customise:
+      image_shortcode_template: 'Iliain\Accessible\Includes\AccessibleShortcodeImage' # (String) Template to use for the image shortcode

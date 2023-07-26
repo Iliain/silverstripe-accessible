@@ -7,6 +7,9 @@ use SilverStripe\Assets\Image;
 use SilverStripe\Core\Extension;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Control\Controller;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\View\ArrayData;
+use SilverStripe\View\ViewableData;
 
 /**
  * Extends the shortcode parser to allow AltText and Captions to appear in WYSIWYG images
@@ -24,17 +27,20 @@ class AccShortcodeExtension extends Extension
      */
     public function onAfterParse(&$content)
     {
-        $isCMS = Controller::curr() instanceof LeftAndMain;
+        $config = Config::inst()->get('Iliain\Accessible\Config', 'settings')['enable_image_shortcode'];
 
-        if (!$isCMS) {
-            if ($content) {
-                // @todo - add config to allow disabling of this feature
-                $doc = new DOMDocument();
-                @$doc->loadHTML($content);
+        if ($config) {
+            $isCMS = Controller::curr() instanceof LeftAndMain;
 
-                $content = $this->applyImageTemplate($doc);
+            if (!$isCMS) {
+                if ($content) {
+                    $doc = new DOMDocument();
+                    @$doc->loadHTML($content);
+
+                    $content = $this->applyImageTemplate($doc);
+                }
             }
-        }
+        }        
     }
 
     /**
@@ -45,6 +51,11 @@ class AccShortcodeExtension extends Extension
      */
     public function applyImageTemplate($doc)
     {
+        $template = Config::inst()->get('Iliain\Accessible\Config', 'customise')['image_shortcode_template'];
+        if (!$template) {
+            return;
+        }
+
         $tags = $doc->getElementsByTagName('img');
         foreach ($tags as $tag) {
             $attributeArr = [];
@@ -64,17 +75,12 @@ class AccShortcodeExtension extends Extension
                 $attributeArr['caption'] = $image->Caption;
             }
 
-            $newTemplate = <<<HTML
-<figure class="{$attributeArr['class']}">
-    <img src="{$attributeArr['src']}" alt="{$attributeArr['alt']}" width="{$attributeArr['width']}" height="{$attributeArr['height']}" loading="{$attributeArr['loading']}" />
-    <figcaption>{$attributeArr['caption']}</figcaption>
-</figure>
-HTML;
-
-            $this->owner->extend('updateAccessibleTemplate', $newTemplate, $tag);
+            $attrData = ArrayData::create($attributeArr);
+            $viewableData = ViewableData::create();
+            $render = $viewableData->renderWith($template, $attrData);
 
             $newNode = $doc->createDocumentFragment();
-            $newNode->appendXML($newTemplate);
+            $newNode->appendXML($render->getValue());
             $tag->parentNode->replaceChild($newNode, $tag);
         }
 

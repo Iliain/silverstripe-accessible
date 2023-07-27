@@ -59,7 +59,7 @@ class AccShortcodeExtension extends Extension
     {
         $template = Config::inst()->get('Iliain\Accessible\Config', 'customise')['image_shortcode_template'];
         if (!$template) {
-            return $doc;
+            return $doc->saveHTML();
         }
 
         $tags = $doc->getElementsByTagName('img');
@@ -103,7 +103,7 @@ class AccShortcodeExtension extends Extension
     {
         $template = Config::inst()->get('Iliain\Accessible\Config', 'customise')['link_shortcode_template'];
         if (!$template) {
-            return $doc;
+            return $doc->saveHTML();
         }
 
         $tags = $doc->getElementsByTagName('a');

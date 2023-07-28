@@ -1,8 +1,10 @@
 # Links
 
-This extension adds an additional template to render in an accessible format, which can be overwritten in your own theme. A link can be rendered by default with `$ButtonLink.Accessible`, or you can render your own template and make use of the listed functions
+This extension adds an additional template to render links, both WYSIWYG and module object, in an accessible format, which can be overwritten in your own theme. A link can be rendered by default with `$ButtonLink.Accessible`, or you can render your own template and make use of the listed functions
 
 ## Usage
+
+### Template Files
 
 ```HTML
 <!-- The getAccessible function will render the accessible template for you -->
@@ -15,6 +17,17 @@ This extension adds an additional template to render in an accessible format, wh
 ```
 
 The current implementation uses FontAwesome to render icons, but you can change this by overwriting the template in `templates/Iliain/Accessibility/Includes/AccessibleLink.ss`
+
+### WYSIWYG
+
+You can change the WYSIWYG template with the following config. Setting it to null will disable the feature
+
+```YAML
+Iliain\Accessible\ShortcodeProviders\AccLinkShortcodeProvider:
+  custom_template: 'Iliain\\Accessible\\Shortcodes\\Link'        # (String|null) Custom template 
+```
+
+## Example
 
 An example of a Link's output:
 

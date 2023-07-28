@@ -1,5 +1,4 @@
-<a href="{$href}" title="{$title}" <% if $target %>target="{$target}"<% end_if %>>
-    {$text}
+<a href="{$href}" title="{$title}" <% if $target %>target="{$target}"<% end_if %>>{$text}
     <% if $type = 'External' || $target %>
         <i class="fa-solid fa-up-right-from-square"></i>
     <% else_if $type = 'Anchor' %>

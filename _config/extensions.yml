@@ -1,18 +1,24 @@
 ---
 Name: accessibility-extensions
 ---
+# Link object extensions
 gorriecoe\Link\Models\Link:
   extensions:
     - Iliain\Accessible\Extensions\AccLinkExtension
 Sheadawson\Linkable\Models\Link:
   extensions:
     - Iliain\Accessible\Extensions\AccLinkExtension
+
+# File and image extensions
 SilverStripe\Assets\Image:
   extensions:
     - Iliain\Accessible\Extensions\AccImageExtension
 SilverStripe\AssetAdmin\Forms\ImageFormFactory:
   extensions:
     - Iliain\Accessible\Extensions\AccImageFormFactoryExtension
+
+# Shortcode extensions
 SilverStripe\View\Parsers\ShortcodeParser:
   extensions:
     - Iliain\Accessible\Extensions\AccShortcodeExtension
+

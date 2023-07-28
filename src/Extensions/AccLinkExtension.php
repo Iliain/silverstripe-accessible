@@ -21,11 +21,21 @@ use Sheadawson\Linkable\Models\Link as SheadawsonLink;
  */
 class AccLinkExtension extends DataExtension
 {
+    /**
+     * New DB fields
+     *
+     * @var array
+     */
     private static $db = [
         'AccessibleText' => 'Varchar(255)',
         'AccessibleType' => 'Varchar(20)'
     ];
 
+    /**
+     * Set accessible type on save
+     *
+     * @return void
+     */
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
@@ -33,6 +43,12 @@ class AccLinkExtension extends DataExtension
         $this->owner->AccessibleType = $this->owner->getBaseAccessibleType();
     }
 
+    /**
+     * Update the fieldlist
+     *
+     * @param FieldList $fields
+     * @return void
+     */
     public function updateCMSFields(FieldList $fields)
     {
         $fields->insertAfter('Title', TextField::create('AccessibleText', 'Accessible Text')->setDescription('e.g. "Read more about our article on lorem ipsum here"'));

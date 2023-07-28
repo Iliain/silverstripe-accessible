@@ -1,6 +1,6 @@
 # Images
 
-Adds a pair of new fields to Images that can be edited in the CMS, Caption and AltText. These fields can either be rendered manually, or with the provided template.
+Adds a pair of new fields to Images that can be edited in the CMS: Caption and AltText. These fields can either be rendered manually, or with the provided template.
 
 ## Usage
 
@@ -20,14 +20,22 @@ You can overwrite the template in `templates/Iliain/Accessibility/Includes/Acces
 
 ### WYSIWYG
 
-You can change the WYSIWYG template with the following config, as well as enable or disable the feature:
+You can change the WYSIWYG template with the following config. Setting it to null will disable the feature
 
 ```YAML
-Iliain\Accessible\Config:
-    settings:
-      enable_image_shortcode: true # enable or disable the shortcode extensions
-    customise:
-      image_shortcode_template: 'Iliain\Accessible\Includes\AccessibleShortcodeImage' # this is the default template
+Iliain\Accessible\ShortcodeProviders\AccImageShortcodeProvider:
+  custom_template: 'Iliain\\Accessible\\Shortcodes\\Image'        # (String|null) Custom template 
+```
+
+## Example
+
+This is an example of the base template, specifically from the WYSIWYG
+
+```HTML
+  <figure>
+      <img src="/assets/image.png" class="center ss-htmleditorfield-file image" alt="I am alt text" width="388" height="388" loading="lazy" title="This is the tooltip">
+      <figcaption>I am a caption look at me</figcaption>
+  </figure>
 ```
 
 ## Template Functions
